@@ -1,0 +1,9 @@
+{{- if .Values.overlayFile }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-istio-operator-overlay
+  namespace: {{ .Release.Namespace }}
+data:
+  {{ toYaml .Values.overlayFile | indent 2 }}
+{{- end }}
