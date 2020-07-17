@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": hook-succeeded
+  name: istioctl-uninstall
+  namespace: istio-system
+spec:
+  activeDeadlineSeconds: 900
+  backoffLimit: 1
+  template:
+    metadata:
+      name: istioctl-uninstall
+    spec:
+      containers:
+      - name: istioctl-uninstall
+        image: brendarearden/istio-test:1.9.8
+        command: ["/bin/sh","-c"]
+        args: ["./usr/local/app/scripts/uninstall_istio_system.sh"]
+        env:
+        - name: RELEASE_NAME
+          value: {{ .Release.Name }}
+      restartPolicy: OnFailure
+      {{- if .Values.defaultSettings.registrySecret }}
+      imagePullSecrets:
+      - name: {{ .Values.defaultSettings.registrySecret }}
+      {{- end }}
+      serviceAccountName: longhorn-service-account

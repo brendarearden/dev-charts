@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: istioctl-installer
-          image: brendarearden/istio-test:1.9.6
+          image: brendarearden/istio-test:1.9.9
           env:
           - name: RELEASE_NAME
             value: {{ .Release.Name }}
