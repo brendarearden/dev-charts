@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-istio-operator-overlay
-  namespace: {{ .Release.Namespace }}
+  name: istio-operator-cr-overlay
+  namespace: istio-system
 data:
   {{ toYaml .Values.overlayFile | indent 2 }}
 {{- end }}

@@ -1,12 +1,13 @@
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Release.Name }}-istio-installer
+  name: istio-installer
 subjects:
 - kind: ServiceAccount
-  name: {{ .Release.Name }}-serviceaccount
-  namespace: {{ .Release.Namespace }}
+  name: serviceaccount
+  namespace: istio-system
 roleRef:
   kind: ClusterRole
-  name: {{ .Release.Name }}-istio-installer
+  name: istio-installer
   apiGroup: rbac.authorization.k8s.io
+  

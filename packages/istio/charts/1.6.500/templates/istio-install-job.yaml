@@ -2,14 +2,14 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: istioctl-installer-{{ randAlphaNum 5 | lower }}
-  namespace: {{ .Release.Namespace }}
+  namespace: istio-system
 spec:
   backoffLimit: 1
   template:
     spec:
       containers:
         - name: istioctl-installer
-          image: brendarearden/istio-test:1.8.9
+          image: brendarearden/istio-test:1.9.5
           env:
           - name: RELEASE_NAME
             value: {{ .Release.Name }}
@@ -33,11 +33,12 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ .Release.Name }}-istio-operator-cr
+            name: istio-operator-cr
         {{- if .Values.overlayFile }}
         - name: overlay-volume
           configMap:
-            name: {{ .Release.Name }}-istio-operator-overlay
+            name: istio-operator-overlay
         {{ end }}
-      serviceAccountName: {{ .Release.Name }}-serviceaccount
+      serviceAccountName: serviceaccount
       restartPolicy: Never
+      

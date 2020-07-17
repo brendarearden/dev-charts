@@ -8,7 +8,7 @@ questions:
       group: "Monitoring"
     - variable: prometheus.enabled
       default: false
-      description: "Disable Prometheus if monitoring is enabled"
+      description: "Enable if not using Rancher's monitoring"
       label: Enable Prometheus
       type: boolean
       group: "Prometheus"
@@ -84,7 +84,7 @@ questions:
       group: "egressGateways"
     - variable: overlayFile
       default: ""
-      description: "Customize istio install with additional services"
+      description: "Customize Istio install with additional configuration"
       label: Istio Overlay File
       type: multiline
       group: "overlayFile"

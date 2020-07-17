@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-istio-operator-cr
-  namespace: {{ .Release.Namespace }}
+  name: istio-operator-cr
+  namespace: istio-system
 data:
 {{ tpl (.Files.Glob "configs/*").AsConfig . | indent 2 }}
