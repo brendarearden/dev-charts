@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: istioctl-installer-{{ randAlphaNum 5 | lower }}
+  namespace: istio-system
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      containers:
+        - name: istioctl-installer
+          image: brendarearden/istio-test:1.9.9
+          env:
+          - name: RELEASE_NAME
+            value: {{ .Release.Name }}
+          - name: REVISION_NAME
+            value: {{ .Chart.Version }}
+          {{- if .Values.overlayFile }}
+          - name: APPLY_OVERLAY_CONFIG
+            value: true
+          {{ end }}
+          command: ["/bin/sh","-c"]
+          args: ["./usr/local/app/scripts/run.sh"]
+          volumeMounts:
+          - name: config-volume
+            mountPath: /app/istio-base.yaml
+            subPath: istio-base.yaml
+          {{- if .Values.overlayFile }}
+          - name: overlay-volume
+            mountPath: /app/overlay-config.yaml
+            subPath: overlay-config.yaml
+          {{ end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: istio-operator-cr
+        {{- if .Values.overlayFile }}
+        - name: overlay-volume
+          configMap:
+            name: istio-operator-overlay
+        {{ end }}
+      serviceAccountName: serviceaccount
+      restartPolicy: Never

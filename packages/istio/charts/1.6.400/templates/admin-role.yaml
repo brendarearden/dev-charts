@@ -1,0 +1,59 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-admin: "true"
+  namespace: istio-system
+  name: istio-admin
+rules:
+  - apiGroups:
+    - config.istio.io
+    resources:
+      - adapters
+      - attributemanifests
+      - handlers
+      - httpapispecbindings
+      - httpapispecs
+      - instances
+      - quotaspecbindings
+      - quotaspecs
+      - rules
+      - templates
+    verbs:
+      - '*'
+  - apiGroups:
+    - networking.istio.io
+    resources:
+      - destinationrules
+      - envoyfilters
+      - gateways
+      - serviceentries
+      - sidecars
+      - virtualservices
+      - workloadentries
+    verbs:
+      - '*'
+  - apiGroups:
+    - security.istio.io
+    resources:
+      - authorizationpolicies
+      - peerauthentications
+      - requestauthentications
+    verbs:
+      - '*'
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: istio-admin
+  namespace: istio-system
+subjects:
+  - kind: ServiceAccount
+    name: serviceaccount
+    namespace: istio-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: istio-admin

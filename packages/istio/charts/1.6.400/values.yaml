@@ -1,0 +1,64 @@
+grafana:
+    enabled: true
+    replicaCount: 1
+
+istiocoredns:
+    enabled: false
+
+kiali:
+    enabled: true
+    replicaCount: 1
+    
+prometheus:
+    enabled: false
+    prometheusAddr: http://access-prometheus.cattle-prometheus:80
+      
+tracing:
+    enabled: true
+  
+base:
+    enabled: true
+
+citadel:
+    enabled: false
+      
+cni:
+    enabled: false
+
+egressGateways:
+    enabled: true
+      
+ingressGateways:
+    enabled: true
+      
+istiodRemote:
+    enabled: false
+
+pilot:
+    enabled: true
+    autoscaleEnabled: false
+    traceSampling: 100.0
+    resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+      
+policy:
+    enabled: false
+     
+telemetry:
+    enabled: false
+    autoscaleEnabled: false
+    resources:
+        limits:
+          cpu: 4800m
+          memory: 4G
+        requests:
+          cpu: 50m
+          memory: 100Mi
+
+
+overlayFile: ""
+monitoringUrl: "http://access-prometheus.cattle-prometheus:80"
+canary: false
+revisionName: ""

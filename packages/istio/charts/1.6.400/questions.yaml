@@ -1,0 +1,90 @@
+rancher_min_version: 2.5.0-rc1
+questions:
+    - variable: monitoringUrl
+      default: "http://access-prometheus.cattle-prometheus:80"
+      description: "Url for rancher monitoring or other existing monitoring"
+      label: Monitoring Url
+      type: string
+      group: "Monitoring"
+    - variable: prometheus.enabled
+      default: false
+      description: "Enable if not using Rancher's monitoring"
+      label: Enable Prometheus
+      type: boolean
+      group: "Prometheus"
+    - variable: pilot.enabled
+      default: true
+      description: "Enable or Disable Pilot"
+      label: Enable Pilot
+      type: boolean
+      show_subquestion_if: true
+      group: "Pilot"
+      subquestions:
+        - variable: pilot.resources.requests.cpu
+          default: "10m"
+          description: "Pilot cpu limit"
+          type: string
+          label: Pilot CPU Limit
+          required: true
+        - variable: pilot.resources.requests.memory
+          default: "100Mi"
+          description: "Pilot memory limit"
+          type: string
+          label: Pilot Memory Limit
+          required: true
+        - variable: pilot.traceSampling
+          default: "100.0"
+          description: "Pilot memory limit"
+          type: string
+          label: Pilot Memory Limit
+          required: true
+    - variable: tracing.enabled
+      default: true
+      description: "Enable or Disable Tracing"
+      label: Enable Tracing
+      type: boolean
+      show_subquestion_if: true
+      group: "Tracing"
+      subquestions:
+        - variable: tracing.resources.requests.cpu
+            default: "50m"
+            description: "Tracing cpu limit"
+            type: string
+            label: Tracing CPU Limit
+            required: true
+        - variable: tracing.resources.requests.memory
+            default: "100Mi"
+            description: "Tracing memory limit"
+            type: string
+            label: Tracing Memory Limit
+            required: true
+        - variable: tracing.resources.limits.cpu
+            default: "4800m"
+            description: "Tracing cpu reservation"
+            type: string
+            label: Tracing CPU Reservation
+            required: true
+        - variable: tracing.resources.limits.memory
+            default: "4G"
+            description: "Tracing memory reservation"
+            type: string
+            label: Tracing Memory Reservation
+            required: true
+    - variable: ingressGateways.enabled
+      default: true
+      description: "Enable or disable ingress"
+      label: Ingress Enable
+      type: boolean
+      group: "ingressGateways"
+    - variable: egressGateways.enabled
+      default: true
+      description: "Enable or disable egress"
+      label: Egress enabled
+      type: boolean
+      group: "egressGateways"
+    - variable: overlayFile
+      default: ""
+      description: "Customize Istio install with additional configuration"
+      label: Istio Overlay File
+      type: multiline
+      group: "overlayFile"
