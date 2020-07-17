@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: istioctl-installer
-          image: brendarearden/istio-test:1.9.5
+          image: brendarearden/istio-test:1.9.6
           env:
           - name: RELEASE_NAME
             value: {{ .Release.Name }}
@@ -41,4 +41,3 @@ spec:
         {{ end }}
       serviceAccountName: serviceaccount
       restartPolicy: Never
-      
